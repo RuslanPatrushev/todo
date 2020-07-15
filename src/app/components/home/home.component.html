@@ -1,0 +1,172 @@
+<div class=" container">
+  <div class="row background-color-todo justify-content-center headerTodos">
+    <h3 class="display-4">ToDos</h3>
+  </div>
+  <div class="justify-content-center d-flex">
+    <div class="col-lg-7 col-md-10 col">
+      <form class="form-group z1" *ngIf="isOpen" @openCloseForm [formGroup]="myForm">
+        <h5 class="text-center" appCommentFont>New ToDo</h5>
+        <div>
+          <label>Todo name</label>
+          <input type="text" class="form-control" placeholder="Name"
+                 formControlName="userName"/>
+          <div class="alert alert-danger"
+               *ngIf="myForm.controls['userName'].invalid && myForm.controls['userName'].touched">
+            Не указано имя
+          </div>
+        </div>
+        <div class=" col mb-3 px-0">
+          <label>Todo comment</label>
+          <input type="text" class="form-control" placeholder="Comment"
+                 formControlName="userComment"/>
+        </div>
+        <div class="pl-3 row justify-content-between">
+          <div class="pb-4 ">
+            <input type="file" accept="image/*" class="form-control-file" (change)="onFileChange($event)">
+          </div>
+          <div class=" col-2 " *ngIf="inputImg">
+            <img class="mr img-thumbnail" [src]="inputImg">
+          </div>
+        </div>
+        <div class="pl-3 row">
+          <button type="button" class=" btn btn-outline-primary w-auto  mr-3" [disabled]="myForm.invalid"
+                  (click)="addToDo()">
+            Add todo
+          </button>
+          <button type="button" class=" btn btn-outline-success" (click)="closeForm()">
+            Finish editing
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row justify-content-center" @openCloseFormButton *ngIf="!isOpen">
+    <button class="btn btn-outline-success btn-lg " type="submit" (click)="openForm()">
+      Start editing
+    </button>
+  </div>
+
+
+  <div class="justify-content-center d-flex">
+    <div class="row col-lg-7  col align-items-baseline">
+      <p class="font-weight-light">Sorting by: </p>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-light btn-sm">
+          <input type="radio" name="options" id="option1" autocomplete="off" (click)="sortingMas('name')"> Name
+        </label>
+        <label class="btn btn-light btn-sm">
+          <input type="radio" name="options" id="option2" autocomplete="off" (click)="sortingMas('comment')"> Comment
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class=" mr-md-5  col-lg-3 col-sm-5 col">
+      <h3>To do</h3>
+      <div class="p-1"
+           cdkDropList
+           #todoList="cdkDropList"
+           [cdkDropListData]="toDos"
+           [cdkDropListConnectedTo]="[doneList]"
+           (cdkDropListDropped)="drop($event) "
+           [cdkDropListDisabled]="!isOpen">
+        <div class="card mb-1" *ngFor="let item of toDos; let i = index"
+             @todo cdkDrag>
+          <div [ngClass]="{'cursor-move': isOpen} " class="row card-header p-1 bg-info m-0"
+               cdkDragHandle>
+            {{i + 1}}
+            <span class="float-right" *ngIf="isOpen">
+              <button class="float-right btn btn-outline-danger  btn-sm ml-1 h-25" type="submit"
+                      (click)="toDos.splice(i, 1)">
+                &times;
+              </button>
+              <span>
+                <button *ngIf="!item.editable" class="float-right btn btn-warning  btn-sm" type="submit"
+                        (click)="item.editable=!item.editable">
+                  edit
+                </button>
+                <button *ngIf="item.editable" class="float-right btn btn-success  btn-sm" type="submit"
+                        (click)="saveToDo(toDos, i)">
+                  save
+                </button>
+              </span>
+            </span>
+          </div>
+          <div [routerLink]="['todo', item.id]" class=" card-body cursor-pointer">
+            <h5 *ngIf="!item.editable">
+              {{item.name | format}}
+            </h5>
+            <div *ngIf="item.editable">
+              <input type="text" class="form-control mb-1" placeholder="Название"
+                     [(ngModel)]="item.name"/>
+            </div>
+            <div *ngIf="!item.editable" appCommentFont>
+              {{item.comment}}
+            </div>
+            <div *ngIf="item.editable">
+              <input type="text" class="form-control mb-1" placeholder="Комментарий"
+                     [(ngModel)]="item.comment"/>
+            </div>
+            <img *ngIf="item.img" [src]=item.img class="card-img-top" alt="...">
+            <img *ngIf="!item.img" src="assets/img/deafault.jpg" class="card-img-top" alt="...">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ml-md-5 col-lg-3 col-sm-5 col">
+      <h3>Done</h3>
+      <div class="p-1"
+           cdkDropList
+           #doneList="cdkDropList"
+           [cdkDropListData]="done"
+           [cdkDropListConnectedTo]="[todoList]"
+           (cdkDropListDropped)="drop($event)"
+           [cdkDropListDisabled]="!isOpen">
+        <div class="card mb-1" *ngFor="let item of done; let i = index"
+             @done cdkDrag>
+          <div [ngClass]="{'cursor-move': isOpen} " class="row card-header p-1 bg-info m-0"
+               cdkDragHandle>
+            {{i + 1}}
+            <span class="float-right" *ngIf="isOpen">
+              <button class="float-right btn btn-danger  btn-sm ml-1" type="submit"
+                      (click)="done.splice(i, 1)">
+                x
+              </button>
+              <span>
+                <button *ngIf="!item.editable" class="float-right btn btn-warning  btn-sm" type="submit"
+                        (click)="item.editable=!item.editable">
+                  edit
+                </button>
+                <button *ngIf="item.editable" class="float-right btn btn-success  btn-sm" type="submit"
+                        (click)="saveToDo(done,i)">
+                  save
+                </button>
+              </span>
+            </span>
+          </div>
+          <div [routerLink]="['todo', item.id]" class="card-body cursor-pointer">
+            <h5 *ngIf="!item.editable">
+              {{item.name}}
+            </h5>
+            <div *ngIf="item.editable" appCommentFont>
+              <input type="text" class="form-control mb-1" placeholder="Название"
+                     [(ngModel)]="item.name"/>
+            </div>
+            <div *ngIf="!item.editable">
+              {{item.comment}}
+            </div>
+            <div *ngIf="item.editable">
+              <input type="text" class="form-control mb-1" placeholder="Комментарий"
+                     [(ngModel)]="item.comment"/>
+            </div>
+            <img *ngIf="item.img" [src]=item.img class="card-img-top" alt="...">
+            <img *ngIf="!(item.img)" src="assets/img/deafault.jpg" class="card-img-top"
+                 alt="...">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

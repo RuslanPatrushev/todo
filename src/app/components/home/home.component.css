@@ -1,0 +1,24 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-move {
+  cursor: move;
+}
+.container{
+  background-color: ghostwhite;
+}
+.headerTodos{
+  z-index: 5;
+  position: relative;
+}
+
+.z1{
+  z-index: 1;
+  position: relative;
+}
+.background-color-todo{
+  background-color: aliceblue;
+}
+input.ng-touched.ng-invalid {border:solid red 2px;}
+input.ng-touched.ng-valid {border:solid green 2px;}
