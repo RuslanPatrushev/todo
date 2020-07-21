@@ -10,13 +10,10 @@ import {HomeComponent} from './components/home/home.component';
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import {CommentFontDirective} from './directives/comment-font.directive';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {appRoutes, AppRoutingModule} from './app-routing.module';
 
 
-const appRoutes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'todo/:id', component: AboutItemComponent},
-  {path: '**', component: NotFoundComponent}
-];
+
 
 @NgModule({
 
@@ -37,6 +34,7 @@ const appRoutes: Routes = [
     DragDropModule,
     RouterModule,
     ReactiveFormsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
