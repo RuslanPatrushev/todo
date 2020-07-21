@@ -14,12 +14,12 @@ import {animate, keyframes, query, stagger, state, style, transition, trigger} f
      trigger('openCloseForm', [
        transition(':enter', [
          style({opacity: '0', transform: 'translateY(-296px)', height:'0'}),
-         animate('1.6s linear',
+         animate('0.6s linear',
            style({opacity: '1', transform: 'translateY(0)', height:'296px'})),
        ]),
       transition(':leave', [
          style({opacity: '1', transform: 'translateY(0)', height:'296px'}),
-         animate('1.6s linear',
+         animate('0.6s linear',
            style({opacity: '0', transform: 'translateY(-296px)', height:'0'})),
       ])
     ]),
@@ -50,14 +50,14 @@ import {animate, keyframes, query, stagger, state, style, transition, trigger} f
     ]),
     trigger('openCloseFormButton', [
       transition(':enter', [
-        style({opacity: '0', transform: 'translateY(-100%)', height:'0', zIndex:'1', position: 'relative', padding:'0', margin:'0', backgroundColor:'red'}),
+        style({opacity: '0', transform: 'translateY(-100%)', height:'0'}),
         animate('0.3s linear',
-          style({opacity: '1', transform: 'translateY(0)', height:'48px', zIndex:'1', position: 'relative', padding:'0', margin:'0', backgroundColor:'red'})),
+          style({opacity: '1', transform: 'translateY(0)', height:'48px'})),
       ]),
       transition(':leave', [
-        style({opacity: '1', transform: 'translateY(0)', height:'48px', zIndex:'1', position: 'relative', padding:'0', margin:'0', backgroundColor:'red'}),
+        style({opacity: '1', transform: 'translateY(0)', height:'48px'}),
         animate('0.3s linear',
-          style({opacity: '0', transform: 'translateY(-100%)', height:'0px', zIndex:'1', position: 'relative', padding:'0', margin:'0', backgroundColor:'red'})),
+          style({opacity: '0', transform: 'translateY(-100%)', height:'0px'})),
       ])
     ]),
   ]
@@ -71,7 +71,6 @@ export class HomeComponent implements OnInit, OnDestroy{
   done: ToDo[];
   tempId: number;
   myForm: FormGroup;
-  height:number;
 
   constructor(private  todoService: TodoService) {
     this.myForm = new FormGroup({

@@ -17,8 +17,20 @@
   z-index: 1;
   position: relative;
 }
-.background-color-todo{
+.background-color-aliceblue{
   background-color: aliceblue;
 }
+.card-header{
+  height: 30px;
+  justify-content: flex-end;
+}
+
+.h-30{
+  height: 30px;
+}
+.h-15{
+  height: 15px;
+}
+
 input.ng-touched.ng-invalid {border:solid red 2px;}
 input.ng-touched.ng-valid {border:solid green 2px;}

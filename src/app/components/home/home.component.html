@@ -1,5 +1,5 @@
-<div class=" container">
-  <div class="row background-color-todo justify-content-center headerTodos">
+<div class="container">
+  <div class="row background-color-aliceblue justify-content-center headerTodos">
     <h3 class="display-4">ToDos</h3>
   </div>
   <div class="justify-content-center d-flex">
@@ -33,7 +33,7 @@
                   (click)="addToDo()">
             Add todo
           </button>
-          <button type="button" class=" btn btn-outline-success" (click)="closeForm()">
+          <button type="button" class=" btn btn-outline-success" (click)="closeForm(); this.myForm.reset()">
             Finish editing
           </button>
         </div>
@@ -74,26 +74,32 @@
            [cdkDropListDisabled]="!isOpen">
         <div class="card mb-1" *ngFor="let item of toDos; let i = index"
              @todo cdkDrag>
-          <div [ngClass]="{'cursor-move': isOpen} " class="row card-header p-1 bg-info m-0"
+
+          <div [ngClass]="{'cursor-move': isOpen} " class="card-header row bg-info p-0 m-0"
                cdkDragHandle>
-            {{i + 1}}
             <span class="float-right" *ngIf="isOpen">
-              <button class="float-right btn btn-outline-danger  btn-sm ml-1 h-25" type="submit"
+              <button class="btn float-right btn-outline-danger ml-1 border border-dark align-items-center d-flex h-30"
+                      type="submit"
                       (click)="toDos.splice(i, 1)">
-                &times;
+                <img src="assets/img/delete.svg" class="h-15" alt="...">
               </button>
               <span>
-                <button *ngIf="!item.editable" class="float-right btn btn-warning  btn-sm" type="submit"
+                <button *ngIf="!item.editable"
+                        class="btn float-right btn-outline-danger ml-1 border border-dark align-items-center d-flex h-30"
+                        type="submit"
                         (click)="item.editable=!item.editable">
-                  edit
+                  <img src="assets/img/edit.svg" class="h-15" alt="...">
                 </button>
-                <button *ngIf="item.editable" class="float-right btn btn-success  btn-sm" type="submit"
-                        (click)="saveToDo(toDos, i)">
-                  save
+                <button *ngIf="item.editable"
+                        class="btn float-right btn-outline-danger ml-1 border border-dark align-items-center d-flex h-30"
+                        type="submit"
+                        (click)="saveToDo(toDos,i)">
+                  <img src="assets/img/success.svg" class="h-15" alt="...">
                 </button>
               </span>
             </span>
           </div>
+
           <div [routerLink]="['todo', item.id]" class=" card-body cursor-pointer">
             <h5 *ngIf="!item.editable">
               {{item.name | format}}
@@ -126,22 +132,27 @@
            [cdkDropListDisabled]="!isOpen">
         <div class="card mb-1" *ngFor="let item of done; let i = index"
              @done cdkDrag>
-          <div [ngClass]="{'cursor-move': isOpen} " class="row card-header p-1 bg-info m-0"
+          <div [ngClass]="{'cursor-move': isOpen} " class="card-header row bg-info p-0 m-0"
                cdkDragHandle>
-            {{i + 1}}
             <span class="float-right" *ngIf="isOpen">
-              <button class="float-right btn btn-danger  btn-sm ml-1" type="submit"
-                      (click)="done.splice(i, 1)">
-                x
+              <button
+                class="btn float-right btn-outline-danger ml-1 border border-dark align-items-center d-flex h-30"
+                type="submit"
+                (click)="done.splice(i, 1)">
+                <img src="assets/img/delete.svg" class="h-15" alt="...">
               </button>
               <span>
-                <button *ngIf="!item.editable" class="float-right btn btn-warning  btn-sm" type="submit"
+                <button *ngIf="!item.editable"
+                        class="btn float-right btn-outline-warning border border-dark align-items-center d-flex h-30"
+                        type="submit"
                         (click)="item.editable=!item.editable">
-                  edit
+                  <img src="assets/img/edit.svg" class="h-15" alt="...">
                 </button>
-                <button *ngIf="item.editable" class="float-right btn btn-success  btn-sm" type="submit"
+                <button *ngIf="item.editable"
+                        class="btn float-right btn-outline-success border border-dark align-items-center d-flex h-30"
+                        type="submit"
                         (click)="saveToDo(done,i)">
-                  save
+                  <img src="assets/img/success.svg" class="h-15" alt="...">
                 </button>
               </span>
             </span>
