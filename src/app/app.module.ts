@@ -4,15 +4,13 @@ import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {Format} from './pipes/format';
-import {AboutItemComponent} from './components/about-item/about-item.component';
-import {RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from './components/home/home.component';
-import {NotFoundComponent} from './components/not-found/not-found.component';
+import {AboutTodoComponent} from './components/about-item/about-todo.component';
+import {RouterModule} from '@angular/router';
+import {TodosComponent} from './components/todos/todos.component';
 import {CommentFontDirective} from './directives/comment-font.directive';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {appRoutes, AppRoutingModule} from './app-routing.module';
-
-
+import {HeaderComponent} from './components/header/header.component';
 
 
 @NgModule({
@@ -20,10 +18,10 @@ import {appRoutes, AppRoutingModule} from './app-routing.module';
   declarations: [
     AppComponent,
     Format,
-    AboutItemComponent,
-    HomeComponent,
-    NotFoundComponent,
+    AboutTodoComponent,
+    TodosComponent,
     CommentFontDirective,
+    HeaderComponent,
   ],
   imports: [
     BrowserAnimationsModule,

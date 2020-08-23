@@ -1,7 +1,4 @@
 <div class="container">
-  <div class="row background-color-aliceblue justify-content-center headerTodos">
-    <h3 class="display-4">ToDos</h3>
-  </div>
   <div class="justify-content-center d-flex">
     <div class="col-lg-7 col-md-10 col">
       <form class="form-group z1" *ngIf="isOpen" @openCloseForm [formGroup]="myForm">
@@ -42,7 +39,7 @@
   </div>
 
   <div class="row justify-content-center" @openCloseFormButton *ngIf="!isOpen">
-    <button class="btn btn-outline-success btn-lg " type="submit" (click)="openForm()">
+    <button class="btn btn-outline-info btn-lg " type="submit" (click)="openForm()">
       Start editing
     </button>
   </div>
@@ -72,7 +69,7 @@
            [cdkDropListConnectedTo]="[doneList]"
            (cdkDropListDropped)="drop($event) "
            [cdkDropListDisabled]="!isOpen">
-        <div class="card mb-1" *ngFor="let item of toDos; let i = index"
+        <div class="card mb-1 shadow-sm" *ngFor="let todo of toDos; let i = index"
              @todo cdkDrag>
 
           <div [ngClass]="{'cursor-move': isOpen} " class="card-header row bg-info p-0 m-0"
@@ -84,13 +81,13 @@
                 <img src="assets/img/delete.svg" class="h-15" alt="...">
               </button>
               <span>
-                <button *ngIf="!item.editable"
+                <button *ngIf="!todo.editable"
                         class="btn float-right btn-outline-danger ml-1 border border-dark align-items-center d-flex h-30"
                         type="submit"
-                        (click)="item.editable=!item.editable">
+                        (click)="todo.editable=!todo.editable">
                   <img src="assets/img/edit.svg" class="h-15" alt="...">
                 </button>
-                <button *ngIf="item.editable"
+                <button *ngIf="todo.editable"
                         class="btn float-right btn-outline-danger ml-1 border border-dark align-items-center d-flex h-30"
                         type="submit"
                         (click)="saveToDo(toDos,i)">
@@ -100,23 +97,23 @@
             </span>
           </div>
 
-          <div [routerLink]="['todo', item.id]" class=" card-body cursor-pointer">
-            <h5 *ngIf="!item.editable">
-              {{item.name | format}}
+          <div [routerLink]="['todo', todo.id]" class=" card-body cursor-pointer">
+            <h5 *ngIf="!todo.editable">
+              {{todo.name | format}}
             </h5>
-            <div *ngIf="item.editable">
+            <div *ngIf="todo.editable">
               <input type="text" class="form-control mb-1" placeholder="Название"
-                     [(ngModel)]="item.name"/>
+                     [(ngModel)]="todo.name"/>
             </div>
-            <div *ngIf="!item.editable" appCommentFont>
-              {{item.comment}}
+            <div *ngIf="!todo.editable" appCommentFont>
+              {{todo.comment}}
             </div>
-            <div *ngIf="item.editable">
+            <div *ngIf="todo.editable">
               <input type="text" class="form-control mb-1" placeholder="Комментарий"
-                     [(ngModel)]="item.comment"/>
+                     [(ngModel)]="todo.comment"/>
             </div>
-            <img *ngIf="item.img" [src]=item.img class="card-img-top" alt="...">
-            <img *ngIf="!item.img" src="assets/img/deafault.jpg" class="card-img-top" alt="...">
+            <img *ngIf="todo.img" [src]=todo.img class="card-img-top" alt="...">
+            <img *ngIf="!todo.img" src="assets/img/deafault.jpg" class="card-img-top" alt="...">
           </div>
         </div>
       </div>
@@ -130,7 +127,7 @@
            [cdkDropListConnectedTo]="[todoList]"
            (cdkDropListDropped)="drop($event)"
            [cdkDropListDisabled]="!isOpen">
-        <div class="card mb-1" *ngFor="let item of done; let i = index"
+        <div class="card mb-1 shadow-sm" *ngFor="let todo of done; let i = index"
              @done cdkDrag>
           <div [ngClass]="{'cursor-move': isOpen} " class="card-header row bg-info p-0 m-0"
                cdkDragHandle>
@@ -142,13 +139,13 @@
                 <img src="assets/img/delete.svg" class="h-15" alt="...">
               </button>
               <span>
-                <button *ngIf="!item.editable"
+                <button *ngIf="!todo.editable"
                         class="btn float-right btn-outline-warning border border-dark align-items-center d-flex h-30"
                         type="submit"
-                        (click)="item.editable=!item.editable">
+                        (click)="todo.editable=!todo.editable">
                   <img src="assets/img/edit.svg" class="h-15" alt="...">
                 </button>
-                <button *ngIf="item.editable"
+                <button *ngIf="todo.editable"
                         class="btn float-right btn-outline-success border border-dark align-items-center d-flex h-30"
                         type="submit"
                         (click)="saveToDo(done,i)">
@@ -157,24 +154,23 @@
               </span>
             </span>
           </div>
-          <div [routerLink]="['todo', item.id]" class="card-body cursor-pointer">
-            <h5 *ngIf="!item.editable">
-              {{item.name}}
+          <div [routerLink]="['todo', todo.id]" class="card-body cursor-pointer">
+            <h5 *ngIf="!todo.editable">
+              {{todo.name}}
             </h5>
-            <div *ngIf="item.editable" appCommentFont>
+            <div *ngIf="todo.editable" appCommentFont>
               <input type="text" class="form-control mb-1" placeholder="Название"
-                     [(ngModel)]="item.name"/>
+                     [(ngModel)]="todo.name"/>
             </div>
-            <div *ngIf="!item.editable">
-              {{item.comment}}
+            <div *ngIf="!todo.editable">
+              {{todo.comment}}
             </div>
-            <div *ngIf="item.editable">
+            <div *ngIf="todo.editable">
               <input type="text" class="form-control mb-1" placeholder="Комментарий"
-                     [(ngModel)]="item.comment"/>
+                     [(ngModel)]="todo.comment"/>
             </div>
-            <img *ngIf="item.img" [src]=item.img class="card-img-top" alt="...">
-            <img *ngIf="!(item.img)" src="assets/img/deafault.jpg" class="card-img-top"
-                 alt="...">
+            <img *ngIf="todo.img" [src]=todo.img class="card-img-top">
+            <img *ngIf="!(todo.img)" src="assets/img/deafault.jpg" class="card-img-top">
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import { TodoService} from './services/todo.service';
-
+import {TodoService} from './services/todo.service';
 
 
 @Component({
@@ -10,6 +9,6 @@ import { TodoService} from './services/todo.service';
   providers: [TodoService]
 })
 
-export class AppComponent  {
+export class AppComponent {
 }
 

@@ -1,14 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {Routes} from '@angular/router';
-import {HomeComponent} from './components/home/home.component';
-import {AboutItemComponent} from './components/about-item/about-item.component';
-import {NotFoundComponent} from './components/not-found/not-found.component';
+import {TodosComponent} from './components/todos/todos.component';
+import {AboutTodoComponent} from './components/about-item/about-todo.component';
 
 export const appRoutes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'todo/:id', component: AboutItemComponent},
-  {path: '**', component: NotFoundComponent}
+  {path: '', component: TodosComponent},
+  {path: 'todo/:id', component: AboutTodoComponent},
+  {path: '**', redirectTo: ''}
 ];
 
 @NgModule({
@@ -17,4 +16,5 @@ export const appRoutes: Routes = [
     CommonModule
   ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

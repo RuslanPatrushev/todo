@@ -1,70 +1,70 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {ToDo, TodoService} from '../../services/todo.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {TodoService} from '../../services/todo.service';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {iterator} from 'rxjs/internal-compatibility';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {animate, keyframes, query, stagger, state, style, transition, trigger} from '@angular/animations';
-// transform: 'translateY(-100%)',
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {ToDo} from '../../models/todo.model';
+import {TODOS} from '../constants/local-storage';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  templateUrl: './todos.component.html',
+  styleUrls: ['./todos.component.css'],
   animations: [
-     trigger('openCloseForm', [
-       transition(':enter', [
-         style({opacity: '0', transform: 'translateY(-296px)', height:'0'}),
-         animate('0.6s linear',
-           style({opacity: '1', transform: 'translateY(0)', height:'296px'})),
-       ]),
+    trigger('openCloseForm', [
+      transition(':enter', [
+        style({opacity: '0', transform: 'translateY(-296px)', height: '0'}),
+        animate('0.3s linear',
+          style({opacity: '1', transform: 'translateY(0)', height: '296px'})),
+      ]),
       transition(':leave', [
-         style({opacity: '1', transform: 'translateY(0)', height:'296px'}),
-         animate('0.6s linear',
-           style({opacity: '0', transform: 'translateY(-296px)', height:'0'})),
+        style({opacity: '1', transform: 'translateY(0)', height: '296px'}),
+        animate('0.3s linear',
+          style({opacity: '0', transform: 'translateY(-296px)', height: '0'})),
       ])
     ]),
 
     trigger('todo', [
       transition(':enter', [
         style({opacity: '0', transform: 'translateX(-100%)'}),
-        animate('0.6s ease-out',
+        animate('0.3s ease-out',
           style({opacity: '1', transform: 'translateX(0px)'})),
       ]),
       transition(':leave', [
         style({opacity: '1', transform: 'translateX(0px)'}),
-        animate('0.6s ease-out',
+        animate('0.3s ease-out',
           style({opacity: '0', transform: 'translateX(-100%)'})),
       ])
     ]),
     trigger('done', [
       transition(`:enter`, [
         style({opacity: '0', transform: 'translateX(100%)'}),
-        animate('0.6s ease-out',
+        animate('0.3s ease-out',
           style({opacity: '1', transform: 'translateX(0px)'})),
       ]),
       transition(':leave', [
         style({opacity: '1', transform: 'translateX(0px)'}),
-        animate('0.6s ease-out',
+        animate('0.3s ease-out',
           style({opacity: '0', transform: 'translateX(100%)'})),
       ])
     ]),
     trigger('openCloseFormButton', [
       transition(':enter', [
-        style({opacity: '0', transform: 'translateY(-100%)', height:'0'}),
+        style({opacity: '0', transform: 'translateY(-100%)', height: '0'}),
         animate('0.3s linear',
-          style({opacity: '1', transform: 'translateY(0)', height:'48px'})),
+          style({opacity: '1', transform: 'translateY(0)', height: '48px'})),
       ]),
       transition(':leave', [
-        style({opacity: '1', transform: 'translateY(0)', height:'48px'}),
+        style({opacity: '1', transform: 'translateY(0)', height: '48px'}),
         animate('0.3s linear',
-          style({opacity: '0', transform: 'translateY(-100%)', height:'0px'})),
+          style({opacity: '0', transform: 'translateY(-100%)', height: '0px'})),
       ])
     ]),
   ]
 })
 
 
-export class HomeComponent implements OnInit, OnDestroy{
+export class TodosComponent implements OnInit, OnDestroy {
   isOpen = false;
   inputImg;
   toDos: ToDo[];
@@ -87,9 +87,9 @@ export class HomeComponent implements OnInit, OnDestroy{
     this.tempId = this.toDos.length + this.done.length;
   }
 
-  addToDo(): void {
-    console.log(this.tempId);
+  addToDo() {
     this.toDos.push(new ToDo(this.myForm.value.userName.trim(), this.myForm.value.userComment.trim(), this.inputImg, ++this.tempId));
+    localStorage.setItem(TODOS, JSON.stringify(this.toDos.concat(this.done)));
   }
 
   completeEdit() {
@@ -140,7 +140,7 @@ export class HomeComponent implements OnInit, OnDestroy{
 
 
   ngOnDestroy() {
-    localStorage.setItem('localTodos', JSON.stringify(this.toDos.concat(this.done)));
+    localStorage.setItem(TODOS, JSON.stringify(this.toDos.concat(this.done)));
     this.completeEdit();
   }
 }
